@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品详情</title>
+</head>
+
+<body>
+    <h1>详情页</h1>
+    <div id="goods">
+        <p>aaa</p>
+    </div>
+    <script>
+        let id;
+        let params = location.search.slice(1).split('&'); // [id=10,username=jj]
+        params.forEach(item => {
+            let arr = item.split('=');
+            console.log(arr);
+            if (arr[0] === id) {
+                id = arr[1];
+            }
+        });
+        if (id) {
+            let xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                let data = JSON.parse(xhr.responseText);
+                console.log(data);
+                goods.innHTML=xhr.responseText;
+            }
+            xhr.open('get','/2020/goods/' + id, true);
+            xhr.send();
+        }
+      
+       
+    </script>
+</body>
+
+</html>

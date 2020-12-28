@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品列表</title>
+    <style>
+        #goodslist ul {
+            overflow: hidden;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            cursor: auto
+        }
+
+        #goodslist li {
+            float: left;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <h1>商品列表</h1>
+    <div id="goodslist">
+
+
+    </div>
+    <script>
+        // 获取元素
+        let goodslist = document.querySelector("#goodslist")
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.onload = function () {
+            let data = JSON.parse(xhr.responseText);
+            console.log("data=", data);
+
+            fun(data);
+        }
+
+        xhr.open("get", "http://localhost:2020/goodslist", true);
+        xhr.send();
+
+
+        function fun(data) {
+            let ul = document.createElement('ul');
+            ul.innerHTML = data.map(item => {
+                return `<li data-id="${item.id}">
+        <img src="${item.name}"/>
+        <h4>${item.name}</h4>
+        <p class="price">价格:<span>${item.price}</span></p>`
+            }).join('\n');
+
+            goodslist.appendChild(ul); //  节点  要插入
+        }
+
+
+        // 点击商品进入详情页面
+        goodslist.onclick = function (e) {
+            e = e || window.event
+            const ger = e.target
+            //    console.log(ger);
+            if (["img", "h4"].includes(ger.tagName.toLowerCase())) { //数组是否包含一个指定的值  toLowerCase()  转小写
+                let currentLi = ger.parentElement;
+
+                // 跳转
+                location.href = "/goods.html?id=" + currentLi.dataset.id; // 传个id过去
+            } //currentLi.getAttribute('data-id')  dataset获取自定义属性
+        }
+    </script>
+</body>
+
+</html>
