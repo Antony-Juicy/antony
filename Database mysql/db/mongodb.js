@@ -104,6 +104,7 @@ async function find(colName, query = {}) {
 
     client.close();
     return result; 
+    
 }
 
 

@@ -11,6 +11,7 @@ function formatData({code=200,data=[],msg="success"}={}){
     }
 }
 
+
 module.exports = {
     formatData
 }

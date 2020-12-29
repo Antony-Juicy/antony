@@ -22,14 +22,14 @@ router.get('/:id', (req, res) => {
     
     erq.get('Content-Type');  //   post请求  获取请求头 参数 
       // post请求：req.body
-    、
+    
     res.send(req.body)   //  获取响应   使用了相应中间件处理后得到数据   express.urlencoded() express.json()
 })
 
 
 
 // 当请求地址为：/api/goods/12，才能匹配这个路由
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res) => { 
     // 根据id删除对应数据库中的商品：delete from goods where id=id
     res.send("goods")
 })

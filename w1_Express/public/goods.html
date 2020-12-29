@@ -14,23 +14,24 @@
         <p>aaa</p>
     </div>
     <script>
+        // 获取id
         let id;
-        let params = location.search.slice(1).split('&'); // [id=10,username=jj]
-        params.forEach(item => {
+        let params = location.search.slice(1).split('&');// [id=10,username=jj]
+        params.forEach(item=>{
             let arr = item.split('=');
-            console.log(arr);
-            if (arr[0] === id) {
+            if(arr[0] === 'id'){
                 id = arr[1];
             }
         });
-        if (id) {
+
+        if(id){
             let xhr = new XMLHttpRequest();
-            xhr.onload = function () {
+            xhr.onload = function(){
                 let data = JSON.parse(xhr.responseText);
                 console.log(data);
-                goods.innHTML=xhr.responseText;
+                goods.innerHTML = xhr.responseText;
             }
-            xhr.open('get','/2020/goods/' + id, true);
+            xhr.open('get','http://localhost:2020/goods/'+id,true);
             xhr.send();
         }
       

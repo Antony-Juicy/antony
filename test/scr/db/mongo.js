@@ -138,6 +138,7 @@ async function find(colName, query = {}, {
     size,
     sort
 } = {}) {
+    
     let {
         client,
         db
