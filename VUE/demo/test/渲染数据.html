@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 渲染数据</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>1.利用双花括号 {{}}渲染数据</h2>
+        <p>{{ msg }}</p>
+
+        <h2>2.用指令 v-text 解决双花括号闪烁的问题</h2>
+        <p v-text="str1"></p>
+
+
+        <h2>3.用指令 v-html 也能渲染数据：可能会有xss攻击，少用</h2>
+        <p v-html="str1"></p>
+
+      
+        <h2>5.利用v-cloak 解决{{}}闪烁问题</h2>
+        <p v-cloak>{{ msg }}</p>
+
+
+
+        <h2>4.用指令 v-once 一次性渲染数据</h2>
+        <p>数量：{{ msg2 }}</p>
+        
+        <!-- 后面更改的数据对我没有影响 -->
+        <p v-once>数量：{{ msg2 }}</p>   
+
+        <input type="button" value="加1" @click="msg2++" />
+        <input type="button" value="减1" @click="msg2--" />
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+
+            data: {
+                msg: "今天怎么样",
+                str1: "不行啊",
+                msg2: 0
+            }
+        });
+    </script>
+</body>
+
+</html>

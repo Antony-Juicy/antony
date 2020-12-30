@@ -446,7 +446,7 @@ mongoDB         database            collection      document
     * fs.writeFile()
     * 目录操作
         * mkdir()
-    * Stream：流，一般用于打文件的读写
+    * Stream：流，一般用于大文件的读写
         * 读取流：`fs.createReadStream(path)`
         * 写入流：`fs.createWriteStream(path)`
         * 管道流：pipe()
@@ -474,3 +474,114 @@ mongoDB         database            collection      document
         > 使用第三方模块`ws`
     * 客户端
         > 需要支持websocket的浏览器
+
+## day2-3
+
+### 复习
+* 协议
+    * ip协议
+        * IPv4：255.255.255.255
+        * IPv6:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF
+    * 通讯协议(共同语言，共同遵守的规则)
+        * TCP
+            * 三次握手
+            * 四次挥手
+        * http/https
+            > s: SSL
+            * 短连接
+            * 客户端主动，服务端被动
+            * 无状态
+        * ws/wss
+            * 长连接
+            * 客户端和服务器都能主动
+            * 有状态
+        * UDP
+            > 不保证对方能收到信息
+* WebSocket
+    * 客户端
+    * 服务端
+* 应用
+    * 多人聊天室
+        * 服务端：广播
+        * 客户端：
+            * 定义发送消息格式
+    * 数据可视化
+        * echarts: canvas
+        * higchart: svg
+
+### 知识点
+* 前端三大框架
+    * AngularJS->Angular(ng): 2009
+        * MVC
+        * 依赖注入
+    * React: 2013
+        * VirtualDOM 虚拟DOM
+    * Vue: 2014
+        > 结合了angular与react的优点，并做了优化
+        * 特点：上手简单，易用
+* 开发习惯的改变
+    * 以前：节点操作、
+        > 节点频繁操作会影响页面性能（节点操作不可避免，但可以减少）
+    * 现在：数据驱动（修改数据后，框架会帮我们自动更新相应节点）
+
+* 架构模式
+    * MVC：最经典的分层
+        * M（Model）: 数据层
+        * V（View）：视图层
+        * C（Controller）：控制层
+    * MVP
+        * M（Model）: 数据层
+        * V（View）：视图层
+        * P（Presenter）：理解为松散的控制器
+    * MVVM
+        * M（Model）: 数据层
+        * V（View）：视图层
+        * VM（ViewModel）: 类似于Presenter的控制器，在vue框架中，框架就是扮演VM的角色
+
+* 模块化开发规范
+    * CommonJS      Node
+    * AMD
+    * CMD
+    * ESModule
+
+    * UMD：AMD+CMD+script全局引入 
+
+* Vue的使用
+    * 数据绑定
+        * 单向绑定：
+            * {{}}：绑定在内容上
+            * v-text
+            * v-html
+            * v-bind：绑定在属性上
+                > 格式：v-bind:attr="data"
+        * 双向绑定: v-model
+            > 单向绑定+事件， v-model的原理：v-bind:value + v-on:input
+            1. 数据层->视图层
+            2. 视图层->数据层
+    * 数据驱动
+        > 逻辑思维的转变：从节点操作改成数据操作
+    * 指令：html的自定义属性
+        * v-bind    单项数据绑定（属性）
+        * v-model   双向数据绑定
+        * v-on      绑定事件
+        * v-for     遍历数据
+        * v-show    是否显示（显示与隐藏，如有频繁的显示隐藏操作，建议使用v-show，否则建议使用v-if）
+        * v-if      实现显示（创建与删除，）
+* 响应式属性
+    > 数据的改变会更新视图
+
+    * 属性特性
+        * 存储器属性
+            * configurable  可配置性（Boolean）
+            * enumerable    可枚举性（Boolean）
+            * getter        监听属性的读取
+            * setter        监听属性的修改
+        * 值属性
+            * configurable  可配置性（Boolean）
+            * enumerable    可枚举性（Boolean）
+            * writable      可写性
+            * value         值
+    > 传统方式**添加**的属性，默认属性特性为true；通过Object.defineProperty()**添加**的属性，默认属性特性为false
+* 数据绑定
+    > v-on
+    * 事件传参

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style>
+        .tab .title {
+            border-bottom: 2px solid #ccc;
+            overflow: hidden;
+        }
+
+        .tab .title span {
+            float: left;
+            padding: 0 15px;
+            height: 50px;
+            line-height: 50px;
+            border: 1px solid #efefef;
+            border-bottom: none;
+        }
+
+        .tab .title span.active {
+            border: 1px solid #ccc;
+            background-color: #ffc
+        }
+
+        .tab .content {
+            border: 1px solid #ddd;
+            padding: 15px
+        }
+    </style>
+</head>
+
+<body>
+    <h1>tab标签切换</h1>
+    <div id="app">
+        <div class="tab">
+            <div class="title">
+                <!-- <span></span>
+                <span></span> -->
+
+                <!-- 给每一个span加上一个 tab-item标签-->
+                <span v-for="(item,idx) in tabs" v-bind:class="{active:idx===currentIndex,'tab-item':true}"
+                @click="Tab(idx)">{{item.name}}</span>
+            </div>
+            <div class="constent">
+                <div v-for="(item,idx ) in tabs" v-show="idx===currentIndex">{{item.name+item.hobby}}</div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        /**
+            * tab标签切换
+                     
+         */
+        const vm = new Vue({
+            el: '#app',
+
+
+
+            data: {
+                tabs: [{
+                    name: "laoxie",
+                    hobby: '今天怎么样？'
+                }, {
+                    name: "taintain",
+                    hobby: '还可以'
+                }, {
+                    name: "jingjing",
+                    hobby: '不行啊！！！'
+                }],
+
+                currentIndex: 0 // 索引
+
+            },
+
+
+
+            methods: {
+                Tab: function (idx) {
+                    this.currentIndex = idx;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

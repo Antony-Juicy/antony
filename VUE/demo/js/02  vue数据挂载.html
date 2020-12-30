@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <h1>02.数据挂载</h1>
+    <div id="app">
+        <p>用户名:{{username}}</p>
+        <input type="text" v-bind:value="age" v-on:input="chan" />
+        <input type="text" v-model="username" name="" id="" />
+
+    </div>
+    <script>
+        /* 
+        数据挂载 
+        能挂载导视图层中的数据，一定是Vue实列的属性
+
+        data数据 在Vue实例化时 ，会把遍历data中所有的属性，把它们变成响应式属性(getter/setter)并写入 Vue实例
+
+        
+        响应式属性（getter/setter）  数据的改变会 更新视图
+        */
+     
+        //  ViewModel控制层
+        let vm = new Vue({
+            el: "#app",
+
+
+
+            // 数据层
+  
+            data: {
+                username: "laoxie",
+                password: 123456,
+                age: 10
+            },
+
+            //  方法
+            methods: {
+                chan(e) {
+                    console.log(e);
+                    this.age = e.target.value;
+                }
+            }
+        });
+
+
+     
+    </script>
+</body>
+
+</html>
