@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式属性</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <h1>响应式属性</h1>
+    <div id="app">
+        <p>用户名：{{username}}</p>
+
+    </div>
+
+    <div id="myapp">
+        <input type="text" v-bind:value="age" v-on:input="changeAge" />
+        <input type="text" v-model="username">
+    </div>
+
+    <!--     要在数据被修改时更新视图，必须能监听到数据被修改的操作
+     监听属性的读取操作：当age属性被读取时，执行这个函数 -->
+    <script>
+        let vm = new Vue({
+            el: '#app',
+
+            data: {
+                username: "jingjing",
+                age: 32
+            },
+
+            methods: {
+                changeAge() {
+                    console.log(e);
+                    this.age = e.target.value;
+                }
+            }
+        });
+
+        let myData = {
+            username: 'laoxie',
+            password: 123456,
+            role: 'admin',
+        };
+        Object.defineProperty(myData, "id", {
+            configurable: true, //可配置性  总开关，用以设置其他属性特性
+            enumerable: false, //可枚举性
+            writable: false, ///  可写性
+            value: 10000
+        })
+        Object.defineProperty(myData, 'username', {
+            enumerable: false
+        })
+
+
+
+
+
+
+        //    便利data数据，把数据变成getter&setter
+        let responsive = {};
+        for (let key in myData) {
+            console.log(key);
+            //   Object.defineProperty(target,key,descriptor)
+            //         target:目标对象
+            //         key:属性名
+            //         descriptor:属性特性 
+
+            Object.defineProperty(responsive, key, {
+                configurable: true,
+                enumerable: true,
+                get() {
+                    return myData[key]; //  读取
+                },
+                set(gre) {
+                    myData[key] = ger; // 修改
+                    render();
+                }
+            })
+        }
+        render();
+
+        function render() {
+            myapp.innText = "用户名：" + myData.username + ', 密码：' + myData.password;
+        }
+    </script>
+</body>
+
+</html>

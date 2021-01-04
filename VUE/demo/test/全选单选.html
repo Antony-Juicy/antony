@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全选 单选</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h2 v-cloak>{{username}}</h2>
+        <input type="checkbox" name="" id="" v-model="allcheck" />全选
+        <ul>
+            <li v-for="item in goods">
+                <input type="checkbox" v-model="item.checked" />
+                <input type="checkbox" v-model="item.checked" />
+                <input type="checkbox" v-model="item.checked" />
+            </li>
+
+        </ul>
+    </div>
+
+</body>
+<script src="./vue.js"></script>
+<script>
+    new Vue({
+
+        el: "#app",
+
+
+
+        data: {
+
+            goods: [{
+                    name: "西瓜",
+                    checked: false,
+                },
+                {
+                    name: "西",
+                    checked: false,
+                },
+                {
+                    name: "瓜",
+                    checked: false,
+                }
+            ],
+        },
+        //计算属性
+        computed: {
+            allcheck: {
+                get() {
+                    //getter方法
+                    return this.goods.every((item) => item.checked == true);
+                },
+                set(val) {
+                    //setter方法
+                    console.log(val, 888);
+                    this.goods.forEach((item) => {
+                        item.checked = val;
+                    });
+                },
+            },
+        },
+
+    });
+</script>
+
+</html>

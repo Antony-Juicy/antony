@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todolist</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="./vue.js"></script>
+
+</head>
+
+<body>
+    <div class="container p-3">
+        <h1 class="text-center">todolist待办事项列表</h1>
+        <div id="app">
+           <div class="input-group mt-3">
+                <input type="text" class="form-control" ref="input" v-model="event" @keyup.enter="addItem" />
+                <div class="input-group-append">
+                    <button class="btn btn-success" @click="addItem">添加</button>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">代办事项</th>
+                        <th scope="col">是否完成</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 遍历事件    给完成的事件添加一个高亮 -->
+                    <tr v-for="(item,idx) in todolist" :class="{'table-success':item.complete}">  
+                        <th scope="row">{{idx+1}}</th>
+                        <td>{{item.event}}</td>
+                        <td>{{item.complete ? '是':'否'}}</td>
+                        <td>
+                            <!-- <div class="btn-group"> -->
+
+                            <button class="btn btn-outline-primary btn-sm" @click="completeItem(item.id)">完成</button>
+                            <button class="btn btn-outline-danger btn-sm" @click="removeItem(item.id)">删除</button>
+                            <!-- </div> -->
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="border border-secondary p-3">
+                代办事项:{{todolist.length}},完成：{{completelist.length}}, 未完成:{{uncompletelist.length}}</div>
+        </div>
+
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+
+            // 数据层
+            data: {
+                todolist: [{
+                        id: 1,
+                        event: "定个小目标",
+                        complete: false
+                    },
+                    {
+                        id: 2,
+                        event: "目标",
+                        complete: false
+                    }, {
+                        id: 3,
+                        event: "小目标",
+                        complete: false
+                    },{
+                        id: 4,
+                        event: "标",
+                        complete: false
+                    }],
+             
+                event: '',
+                maxId: 4 //  默认值
+
+            },
+             // 计算属性：一般用于对data数据进行过滤，映射，计算等操作
+            // 计算属性为存储器属性，默认为getter
+            // 计算属性具有缓存功能
+            computed: {
+                completelist: function () {
+                  
+                    return this.todolist.filter(item => item.complete)
+                },
+                uncompletelist: function () {
+                    return this.todolist.filter(item => !item.complete)
+                }
+                // test:{
+                //     get(){
+                //        return this.maxId; 
+                //     },
+                //     set(newVal){
+                //         this.maxId = newVal;
+                //     }
+                // }
+            },
+            methods: {
+                addItem() {
+                    let newEvent = {
+                        id: ++this.maxId,
+                        event: this.event,
+                        complete: false,
+                    }
+                    this.todolist.push(newEvent); //  上树
+                    //  清空并自动获取焦点
+                    this.event = '';
+
+                    this.$refs.input.focus(); // 特殊属性 获取节点
+                },
+                // 删除
+                removeItem(id) {
+                    this.todolist = this.todolist.filter(item => item.id != id);
+                },
+                // 修改
+                completeItem(id) {
+                    this.todolist.forEach(item => {
+                        if (item.id == id) {
+                            item.complete = true;
+                        }
+                    })
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>属性绑定和事件绑定</title>
+    <script src="./vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- 鼠标悬停几秒钟查看此处动态绑定的提示信息！ title -->
+        <h1 :title="msg">不行啊。</h1>  
+        <h2 :title="url">今天</h2>
+        <h3 @click="chang()">今天可以 可以</h3>
+    </div>
+</body>
+<script>
+    new Vue({
+
+        el: "#app",
+
+        // 数据层
+        data: {
+            msg: "今天可以。",
+            url: "一般般",
+            ger: "可以 可以"
+        },
+
+        //  方法
+        methods: {
+            chang(res) {
+                alert("周五啦")
+            },
+        },
+    });
+</script>
+
+</html>
