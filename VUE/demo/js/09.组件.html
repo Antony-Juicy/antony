@@ -29,23 +29,16 @@
             <td>{{item.event}}</td>
             <td>{{item.complete ? '是':'否'}}</td>
             <td>
-                <!-- <div class="btn-group"> -->
-
                 <button class="btn btn-outline-primary btn-sm" @click="complete(item.id)">完成</button>
                 <button class="btn btn-outline-danger btn-sm" @click="remove(item.id)">删除</button>
-                <!-- </div> -->
-
             </td>
         </tr>
     </template>
-
 
     <template id="todoAdd">
         <div class="input-group mt-3">
             <input type="text" class="form-control" ref="input" v-model="event" @keyup.enter="addItem" />
             <div class="input-group-append">
-                <!-- <button class="btn btn-success" @click="$emit('add',event)">添加</button> -->
-                <!--  自定义事件 $emit() -->
                 <button class="btn btn-success" @click="addItem">添加</button>
             </div>
         </div>
@@ -53,8 +46,7 @@
 
 
     <template id="todoContent">
-        <!-- <div> -->
-        <!-- {{datalist}} -->
+
         <table class="table">
             <thead>
                 <tr>
@@ -65,17 +57,11 @@
                 </tr>
             </thead>
             <tbody>
-
-                <!-- <tr is="todo-item" v-for="(item,idx) in datalist" :key="item.id" :item="item" :idx="idx"
-                    :complete="complete" :remove="remove"></tr> -->
                 <tr is="todo-item" v-for="(item,idx) in datalist" :key="item.id" :item="item" :idx="idx"></tr>
-
             </tbody>
         </table>
-        <!-- </div> -->
+
     </template>
-
-
 
     <template id="todoStatus">
         <div class="border border-secondary p-3">
@@ -85,12 +71,7 @@
 
     <template id="todolist">
         <div class="todolist">todolist
-            <!-- {{datalist}} -->
             <todo-add @add="addItem"></todo-add>
-            <!--  父传子 数据     props中的数据会自动成为组件实例的属性-->
-
-            <!-- <todo-content :datalist="datalist" :complete="completeItem" :remove="removeItem"></todo-content> -->
-            <!-- <todo-content :datalist="datalist"></todo-content> -->
             <todo-content :datalist="datalist"></todo-content>
             <todo-status :datalist="datalist"></todo-status>
         </div>
@@ -99,8 +80,6 @@
 
     <script>
         // 定义一个Vue实例，用于传输数据
-
-        // const Bus = new Vue();
 
         const todoAdd = {
             data: function () {
@@ -129,7 +108,7 @@
         }
 
         const todoItem = {
-            // props: ["item", "idx", "remove", "complete"],
+
             props: ["item", "idx"],
             template: `#todoItem`,
 
@@ -137,11 +116,9 @@
             methods: {
                 complete(id) {
                     // 触发事件并传递数据
-                    // Bus.$emit("complete", id);
                     this.$root.$emit('complete', id);
                 },
                 remove(id) {
-                    // Bus.$emit("remove", id);
                     this.$root.$emit('remove', id);
 
                 }
@@ -154,9 +131,7 @@
 
 
         const todoContent = {
-            // 接收 props数据
-
-            // props: ["datalist", "complete", "remove"],
+            // 接收 props数据        
             props: ["datalist"],
             template: `#todoContent`,
 
@@ -217,7 +192,7 @@
 
                 // 定义todoContent组件
                 todoContent,
-                
+
                 // 定义todoStatus组件
                 todoStatus,
             },
@@ -252,15 +227,10 @@
             // 生命周期函数：在某个节点会自动执行的函数
             // Vue实例创建完成后执行这里的代码（自动）
             created() {
-                // Bus.$on("complete", this.completeItem);
-                // Bus.$on("remove", this.removeItem);
                 this.$root.$on('complete', this.completeItem);
                 this.$root.$on('remove', this.removeItem);
             }
         })
-
-
-
 
         const vm = new Vue({
             el: "#app",
