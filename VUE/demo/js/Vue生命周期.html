@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue生命周期</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <h1>Vue生命周期</h1>
+    <div id="app">
+        {{username}}
+    </div>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                username: 'laoxie'
+            },
+            // 初始化
+            beforeCreate() {
+                console.log(this.username); // undefined
+            },
+            //  获取实列
+            created() {
+                console.log(this.username); // laoxie
+            },
+            // 获取节点，但数据未渲染
+            beforeMount() {
+                console.log(document.querySelector('#app').innerHTML); //  {{username}}
+            },
+            // 实例挂载到 DOM
+            mounted() {
+                console.log(document.querySelector('#app').innerHTML); // laoxie
+
+            },
+            // 数据有更新但未更新节点
+            beforeUpdate() {
+                console.log(document.querySelector('#app').innerHTML);
+            },
+            // 更新节点完毕
+            updated() {
+                console.log(document.querySelector('#app').innerHTML);
+            },
+            // 销毁前
+            beforeDestroy() {
+                console.log('beforeDestroy')
+            },
+            // 销毁后   清除定时器、延迟器、取消ajax请求等
+            destroyed() {
+                console.log('destroyed')
+            }
+        })
+    </script>
+</body>
+
+</html>

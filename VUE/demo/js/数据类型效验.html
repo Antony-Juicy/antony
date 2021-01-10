@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据类型校验</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <data-list :data='hotlist' :idx="10" age="19" ></data-list>
+        <data-list id="dd" ref="dd"></data-list>
+    </div>
+
+    <template id="datalist">
+        <div>
+            <h1>datalist</h1>
+            <ul>
+                <li v-for='item in data' :key="item" >{{item}}</li>
+            </ul>
+        </div>
+    </template>
+    <script>
+        const dataList = {
+            // 类型校验
+            // data:Array
+            props: {
+                data: {
+                    type: Array,
+                    default: function () {
+                        return []
+                    },
+
+                },
+                idx: {
+                    type: [String, Number]
+                },
+                age: {
+                    validator: function (val) {
+                        return val > 18 && val < 30
+                    }
+                }
+            },
+            data() {
+                return {
+
+                }
+            },
+            template: '#datalist'
+        }
+
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                hotlist: ['Vue组件的定义方式有那些', 'Vue组件通讯方式有那些', 'Vue组件与Vue的实例配置哪些不同点'],
+                iqInfo: {
+                    name: 'Vue组件通讯方式有那些',
+                    id: 123,
+                    hot: 1234
+                }
+
+            },
+            //  组件
+            components: {
+                dataList
+                
+            },
+            methods(){
+                console.log(this.$refs.dd);
+            }
+
+        })
+    </script>
+</body>
+
+</html>
