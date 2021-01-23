@@ -3,6 +3,8 @@ const cheerio = require('cheerio'); //  标签
 const fs = require('fs'); //  读取文件
 const path = require('path');
 
+const db = require('../../Database/db/mongodb')
+
 
 
 // 目标地址
@@ -33,23 +35,37 @@ request(url, (ree, res, body) => { //  body 每条数据  结构
             imgs,
             sku
         }
-        goods.push(good);
+
 
 
         // 2. 爬取图片到本地
 
         // 获取图片名称
-        const filename = path.basename(imgs);
+        const filename = path.basename(imgurl);
 
         const fileStream = fs.createWriteStream('../public/img/' + filename);
 
         // request请求图片地址，返回一个数据流Stream   request 实现一个简单的图片抓取的小爬虫       利用request与stream数据流保存爬取到的图片到本地硬盘
-        request(imgs).pipe(fileStream);
+        request(imgurl).pipe(fileStream);
+        good.imgurl=filename;
+        goods.push(good);
 
 
+        // 小图
+        imgs.forEach((item) => {
+            console.log(item);
+            const filename = path.basename(item);
+            const fileStream = fs.createWriteStream('../public/img/' + filename);
+            request(item).pipe(fileStream);
+            good.imgs = filename;
+            goods.push(good);
+          
+        })
+        
     });
 
 
     console.log(goods);
+    db.create("goods",goods);
 
 });

@@ -92,7 +92,7 @@
     margin: 0;
   }
 
-  .pric {
+  .price {
 
     span::before,
     del::before {
@@ -126,4 +126,12 @@
     color: #f00;
     font-weight: bold;
   }
+  .el-card__body {
+  h4 {
+    margin-top: 0;
+  }
+  img {
+    width: 100%;
+  }
+}
 </style>
