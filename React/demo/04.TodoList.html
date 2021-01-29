@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04.TodoList</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+
+<body>
+    <h1>04.TodoList</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+        let defaultValue = { username: 'laoxie' };
+        // 创建Context对象，对象内包含Provider  共享数据 与 Consumer组件  接收数据
+        // 默认值为在没有Provider的情况下提供的默认数据
+        let MyContext = React.createContext(defaultValue);
+        /**
+            * 04.TodoList
+         */
+
+
+        // 定义组件
+        function TodoItem({ item, idx }) {
+            return (
+                <tr>
+                    <th>{idx + 1}</th>
+                    <td>{item.todo}</td>
+                    <td>{item.complete ? '是' : '否'}</td>
+                    <td>
+                        {/* 接收数据 */}
+                        <MyContext.Consumer>
+                            {
+                                (value) => {
+                                    console.log(value);
+                                    return (
+                                        //    {/* 不会生成标签 */}
+                                        <React.Fragment>
+                                            <button className="btn btn-outline-primary btn-sm" onClick={value.complete.bind(null, item.id)}>完成</button>
+                                            <button className="btn btn-outline-danger btn-sm" onClick={value.remove.bind(null, item.id)}>删除</button>
+                                        </React.Fragment>
+                                    )
+                                }
+                            }
+
+                        </MyContext.Consumer>
+                    </td>
+                </tr>
+            )
+        }
+
+
+
+        function TodoConent({ datalist }) {
+            return (
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>代办事项</th>
+                            <th>是否完成</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            datalist.map((item, idx) => <TodoItem key={item.id} item={item} idx={idx}>
+                            </TodoItem>)
+                        }
+
+                    </tbody>
+                </table>
+            )
+        }
+
+        class TodoForm extends React.Component {
+
+            constructor() {
+                super();
+                this.state = {
+                    todo: ''
+                }
+
+                // 改变 this 指向
+                this.add = this.add.bind(this);
+                this.changeTodo = this.changeTodo.bind(this);
+            }
+
+            // 添加
+            add() {
+                this.props.addItem(this.state.todo);
+
+                this.setState({
+                    todo: ''
+                });
+
+                // 自动获取焦点
+                this.element.focus();
+            }
+
+            // 修改  value
+            changeTodo(e) {
+                this.setState({
+                    todo: e.currentTarget.value   // 绑定事件元素
+                })
+            }
+            render() {
+                console.log(this.context);
+                const { todo } = this.state;
+                return (
+                    <div className="form-item">
+                        <textarea className="form-control" value={todo} onChange={this.changeTodo} ref={el => this.element = el}></textarea>
+                        <div className="mt-2 text-right">
+                            <button className="btn btn-success" onClick={this.add}>添加</button>
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        //  类组件拿数据 静态属性
+        TodoForm.contextType = MyContext;
+
+
+        // 定义组件
+        class TodoList extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    datalist: [
+                        {
+                            id: 1,
+                            todo: '定个小目标睡一整天',
+                            complete: true
+                        }, {
+                            id: 2,
+                            todo: '赚他一个亿',
+                            complete: false
+                        }, {
+                            id: 3,
+                            todo: '迎娶白富美，达到人生巅峰',
+                            complete: false
+                        }, {
+                            id: 4,
+                            todo: '出人CEO，达到疯癫状态',
+                            complete: false
+                        }],
+
+                }
+                // 推荐在初始化时改变this指向
+                this.addItem = this.addItem.bind(this);
+                this.removeItem = this.removeItem.bind(this);
+                this.completeItem = this.completeItem.bind(this);
+            }
+            //  添加 数据 （谁的数据谁修改
+            addItem(todo) {
+                const { datalist } = this.state;
+                const newData = {
+                    id: parseInt(Math.random() * 10000),
+                    todo,
+                    complete: false,
+                    addtime: Date.now()  // 时间
+                }
+                this.setState({
+                    datalist: [newData, ...datalist]
+                })
+            }
+
+            render() {
+                const { datalist } = this.state;
+                // 共享数据
+                const contextData = {
+                    remove: this.removeItem,
+                    complete: this.completeItem
+                };
+                return (
+                    <div className="container">
+                        {/*利用Provider的value属性共享数据*/}
+                        <MyContext.Provider value={contextData}>
+                            <TodoConent datalist={datalist} />
+                            <TodoForm addItem={this.addItem} />
+                        </MyContext.Provider>
+                    </div>
+
+                )
+            }
+
+            //   删除
+            removeItem(id) {
+                let { datalist } = this.state;
+                datalist = datalist.filter(item => item.id != id);
+                this.setState({
+                    datalist
+                })
+            }
+
+            //  修改
+            completeItem(id) {
+                let { datalist } = this.state;
+                datalist = datalist.map(item => {
+                    if (item.id == id) {
+                        item.complete = true
+                    }
+                    return item;
+
+                })
+                // 修改数据
+                this.setState({
+                    datalist
+                })
+            }
+        }
+
+
+        ReactDOM.render(
+            <TodoList />
+            ,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+
+</html>

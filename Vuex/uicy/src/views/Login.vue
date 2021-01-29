@@ -93,7 +93,7 @@
                             // this.$message.error("用户名或密码错误");
                             this.errMsg = '用户名或密码错误';
                         } 
-
+                        // 异步操作 封装 多出使用
                         // this.$store.dispatch('login',{
                         //      username,
                         //         password: newPassword
