@@ -1,0 +1,5 @@
+<!--custom-tab-bar/index.wxml-->
+
+<view class="tabbar">
+ <view wx:for="{{list}}" wx:key="pagePath"><text>{{item.text}}</text></view>
+</view>

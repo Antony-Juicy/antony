@@ -1,0 +1,35 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "mine",
+          "pathName": "pages/mine/mine",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "camera",
+          "pathName": "pages/camera/camera",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "map",
+          "pathName": "pages/map/map",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

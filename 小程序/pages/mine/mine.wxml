@@ -1,0 +1,9 @@
+<view class="container">
+  <!-- html 标签 -->
+  <rich-text nodes="<h1 class=\"h1\">今天不行啊！！！</h1>" ></rich-text>
+  <text data-title="{{currentClass}}">{{currentClass}}</text>
+  <!-- 单向+事件：<input type="text" value="{{currentClass}}" bind:input="changeClass"  /> -->
+  <button bind:tap="handleClick" data-url="/pages/map/map">点击</button>
+  <datalist myProperty="还可以。"></datalist>
+  
+</view> 

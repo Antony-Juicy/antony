@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/mine/mine",
+    "pages/antony/antony",
+    "pages/an/an",
+    "pages/camera/camera",
+    "pages/map/map"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#58bc58",
+    "navigationBarTitleText": "今天可以吗？",
+    "backgroundColor": "#f60",
+    "enablePullDownRefresh": true
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json", 
+  "tabBar":{
+    "custom":true,
+    "color":"#fff",
+    "selectedColor":"#ff0",
+    "position": "top",
+    "backgroundColor": "#58bc58",
+    "list":[{
+        "pagePath":"pages/index/index",
+        "text":"首页"
+       
+   
+      },
+      {
+        "pagePath":"pages/mine/mine",
+        "text":"我的"
+      
+      
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+    
+  },
+  "usingComponents": {
+    "datalist":"/components/list/list"
+  },"useExtendedLib":{
+    "weui":true
+  }
+  
+
+}

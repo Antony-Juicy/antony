@@ -1,0 +1,10 @@
+<!--index.wxml-->
+
+<mp-cells ext-class="user-list" title="当前班级学生列表">
+  <text wx:for="{{userList}}" wx:key="_id" bind:tap="gotoUser" data-id="{{item._id}}">{{item.username}}</text>
+</mp-cells>
+
+<mp-cells ext-class="my-cells" title="班级列表">
+  <mp-cell link wx:for="{{classList}}" wx:key="_id" value="{{index+1}}. {{item.city}}-{{item.category}}-{{item.name}}" footer="{{item.category}}" bind:tap="gotoClass" data-id="{{item._id}}">
+    </mp-cell>
+</mp-cells>

@@ -1,0 +1,6 @@
+<!--components/list/list.wxml-->
+<view>{{myProperty}}</view>
+<view>哈哈哈哈哈哈啊哈哈哈</view>
+
+
+
