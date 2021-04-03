@@ -1,7 +1,8 @@
-// import request from './request'
-// export {
-//     request
-// };
+import request from './request'
+
+export {
+    request
+};
 
 
 export * from './request';
